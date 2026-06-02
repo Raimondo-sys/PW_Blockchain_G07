@@ -5,6 +5,7 @@
 ![Solidity](https://img.shields.io/badge/Solidity-0.8.28-363636?style=for-the-badge&logo=solidity)
 ![Hardhat](https://img.shields.io/badge/Hardhat-3.7.0-f7dc6f?style=for-the-badge&logo=hardhat)
 ![TypeScript](https://img.shields.io/badge/TypeScript-6.x-3178c6?style=for-the-badge&logo=typescript)
+![React](https://img.shields.io/badge/React-18-61dafb?style=for-the-badge&logo=react)
 ![Tests](https://img.shields.io/badge/Tests-52%2F52%20passing-2ecc71?style=for-the-badge)
 ![License](https://img.shields.io/badge/License-MIT-blue?style=for-the-badge)
 
@@ -70,6 +71,7 @@ DEG sottomette proposta  →  PP verifica e inoltra  →  PA endorse  →  PA vo
 | Cifratura payload | AES-256-GCM + ECDH P-256 | Node crypto |
 | Storage | IPFS simulato SHA-256 + Helia PoC | — |
 | Analisi statica | Slither | 0.11.5 |
+| Frontend | React + Vite | 18 / 6.x |
 
 ---
 
@@ -77,8 +79,8 @@ DEG sottomette proposta  →  PP verifica e inoltra  →  PA endorse  →  PA vo
 
 ```bash
 # Clona la repository
-git clone https://github.com/TUO_USERNAME/NOME_REPO.git
-cd NOME_REPO
+git clone https://github.com/Raimondo-sys/PW_Blockchain_G07.git
+cd PW_Blockchain_G07
 
 # Installa le dipendenze
 npm install
@@ -128,6 +130,28 @@ npx hardhat run scripts/external_verifier.ts --network hardhatMainnet
 # Benchmark — gas, latency, storage overhead
 npx hardhat run scripts/benchmark.ts --network hardhatMainnet
 ```
+
+---
+
+## 🖥️ Frontend Dashboard
+
+La cartella `frontend/` contiene la **PolicyChain Dashboard** — un'interfaccia web di monitoraggio realizzata in React + Vite che visualizza lo stato del sistema in modo leggibile.
+
+```bash
+cd frontend
+npm install
+npm run dev
+```
+
+Si apre su `http://localhost:5173`.
+
+**Sezioni disponibili:**
+
+- **Dashboard** — KPI del consorzio, domain status, quorum pipeline in tempo reale
+- **Policy Registry** — versioni certificate con regole, CID e enforcement records
+- **Proposals** — ciclo di vita proposte con stepper e visualizzazione voti PA
+- **Identity Registry** — gerarchia entità con ruoli, scope e stato (pairwise, scadenze)
+- **Audit Trail** — timeline immutabile degli eventi on-chain con filtri per tipo
 
 ---
 
@@ -195,6 +219,10 @@ policies/
   safe-default-network.json
   LSP-NETWORK-001-v1.json
   LSP-NETWORK-001-v2.json
+
+frontend/
+  src/
+    App.jsx    PolicyChain Dashboard — React + Vite
 ```
 
 ---
@@ -207,5 +235,5 @@ Corso: Blockchain e Cybersecurity — A.A. 2025/2026
 ---
 
 <div align="center">
-  <sub>Built with ❤️ on Hardhat · Solidity · TypeScript</sub>
+  <sub>Built with ❤️ on Hardhat · Solidity · TypeScript · React</sub>
 </div>
