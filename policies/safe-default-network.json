@@ -1,0 +1,23 @@
+{
+  "id": "LSP-NETWORK-SAFE-DEFAULT-001",
+  "version": "1.0",
+  "domain": "NETWORK",
+  "standard": "NIS2-compliant",
+  "description": "Configurazione minima garantita per il dominio NETWORK. Attivata automaticamente dall'AA in assenza di una policy attiva.",
+  "rules": [
+    {
+      "eventType": "authentication_failure",
+      "sources": ["firewall"],
+      "retention": "P30D",
+      "severity": "HIGH",
+      "alertThreshold": 10,
+      "format": "CEF"
+    }
+  ],
+  "enforcement": {
+    "mandatory": true,
+    "gracePeriod": "P0D",
+    "auditFrequency": "monthly",
+    "note": "Safe default — nessuna grace period, applicazione immediata"
+  }
+}

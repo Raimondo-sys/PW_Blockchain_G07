@@ -1,0 +1,140 @@
+{
+  "_format": "hh3-artifact-1",
+  "contractName": "IPolicyRegistry",
+  "sourceName": "contracts/GovernanceContract.sol",
+  "abi": [
+    {
+      "inputs": [
+        {
+          "internalType": "bytes32",
+          "name": "proposalId",
+          "type": "bytes32"
+        },
+        {
+          "internalType": "string",
+          "name": "cid",
+          "type": "string"
+        },
+        {
+          "internalType": "string",
+          "name": "cidKeyDistrib",
+          "type": "string"
+        },
+        {
+          "internalType": "uint8",
+          "name": "domain",
+          "type": "uint8"
+        },
+        {
+          "internalType": "uint32",
+          "name": "version",
+          "type": "uint32"
+        },
+        {
+          "internalType": "string",
+          "name": "safeDefaultCid",
+          "type": "string"
+        }
+      ],
+      "name": "certifyPolicy",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "uint8",
+          "name": "domain",
+          "type": "uint8"
+        }
+      ],
+      "name": "getActivePolicy",
+      "outputs": [
+        {
+          "internalType": "bytes32",
+          "name": "",
+          "type": "bytes32"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "uint8",
+          "name": "domain",
+          "type": "uint8"
+        }
+      ],
+      "name": "getCurrentVersion",
+      "outputs": [
+        {
+          "internalType": "uint32",
+          "name": "",
+          "type": "uint32"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "uint8",
+          "name": "domain",
+          "type": "uint8"
+        }
+      ],
+      "name": "hasSafeDefault",
+      "outputs": [
+        {
+          "internalType": "bool",
+          "name": "",
+          "type": "bool"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "bytes32",
+          "name": "proposalId",
+          "type": "bytes32"
+        }
+      ],
+      "name": "retirePolicy",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "uint8",
+          "name": "domain",
+          "type": "uint8"
+        },
+        {
+          "internalType": "string",
+          "name": "newSafeDefaultCid",
+          "type": "string"
+        }
+      ],
+      "name": "updateSafeDefault",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    }
+  ],
+  "bytecode": "0x",
+  "deployedBytecode": "0x",
+  "linkReferences": {},
+  "deployedLinkReferences": {},
+  "immutableReferences": {},
+  "inputSourceName": "project/contracts/GovernanceContract.sol",
+  "buildInfoId": "solc-0_8_28-dc178c51bd246fe6ea37bd10ad4f56bece3d398e"
+}

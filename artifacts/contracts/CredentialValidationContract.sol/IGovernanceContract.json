@@ -1,0 +1,27 @@
+{
+  "_format": "hh3-artifact-1",
+  "contractName": "IGovernanceContract",
+  "sourceName": "contracts/CredentialValidationContract.sol",
+  "abi": [
+    {
+      "inputs": [],
+      "name": "isAuditWindowOpen",
+      "outputs": [
+        {
+          "internalType": "bool",
+          "name": "",
+          "type": "bool"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    }
+  ],
+  "bytecode": "0x",
+  "deployedBytecode": "0x",
+  "linkReferences": {},
+  "deployedLinkReferences": {},
+  "immutableReferences": {},
+  "inputSourceName": "project/contracts/CredentialValidationContract.sol",
+  "buildInfoId": "solc-0_8_28-2da5202a840d8f19ddab7859a8f58ba9d46ca044"
+}

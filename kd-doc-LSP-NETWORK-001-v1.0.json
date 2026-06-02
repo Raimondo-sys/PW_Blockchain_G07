@@ -1,0 +1,62 @@
+{
+  "policyId": "LSP-NETWORK-001",
+  "entries": [
+    {
+      "recipientDID": "did:ethr:pa1",
+      "ephemeralPubKey": "04671e0f66dd9919adfd484603b40a09d19a2552f1d915e1337a6465e27dc1fad78118d7d14eb5a18bcb78e5980428b8ee64edb1085efef3acbe4482fe78a96f43",
+      "encryptedKey": "b1f453883a958d903dc5dd16f9893b871781d46bcef53b723c29ae6ad3c2f63f",
+      "iv": "f8fec83289b3e06dd7209689",
+      "authTag": "c334ed98625e09bc30bcaed56784fe5e"
+    },
+    {
+      "recipientDID": "did:ethr:pa2",
+      "ephemeralPubKey": "04058d9bc88a156eaebf472baf921f705949eec84e305510af7ef72c05320a63633ff77c5912df4be3db8a2074dfaf94c6b991c4aabaf7f784da4ab6c0c50889c6",
+      "encryptedKey": "e9fbf5de37b0e097ca029ca244d8937929025d46336e17a4c9d1775f38aae5ec",
+      "iv": "59996a9880f1a2a82bd53353",
+      "authTag": "aa499b81f4a89f80dec609c30bb7ad11"
+    },
+    {
+      "recipientDID": "did:ethr:pa3",
+      "ephemeralPubKey": "044fff7ffe3f89d355652d6638764ab4bb9c837ec81bcb038fc15b7a610889e2afbb60ad7fb50a52f36d4611c91bca55804e27a0433b2b81de640c8aad0c835e08",
+      "encryptedKey": "5436895c619a5097110be9cffe5bae4af7d61cffe0b1cecdd40a0dfe65f433ef",
+      "iv": "244cd1f7e826237dae136cdd",
+      "authTag": "415ed07a93b4f893a9e0f67a9d6059d8"
+    },
+    {
+      "recipientDID": "did:ethr:pa4",
+      "ephemeralPubKey": "048dc88fb52f82895a988366d3fe853911529716215b35f6d77b459f0ff97fa1714e9ae98d8db45178a362da2bcc55b3511d861f05eddb39cc0c2a1e32b384ac92",
+      "encryptedKey": "7d639aea665ba4c14568a7a15d99d83e3b2181389b3dd014d8d5ad65463ffe3a",
+      "iv": "95d1b74ebc4c3751019db54d",
+      "authTag": "3778ad234460cdf113d2b2f66a9a98f4"
+    },
+    {
+      "recipientDID": "did:ethr:pp1",
+      "ephemeralPubKey": "04e480d956521ab3b9ef62570c80ea837a31fadda35c4df771795c92b54ffce57dff7e26c0d473513836342407011272a77f394aff860721e07a95049320098825",
+      "encryptedKey": "2212912c84a7102b866dbe0dcaea3a2bc7e5ee555f70259e7cd61188aee9199b",
+      "iv": "05b6194b520ffe1a8cb82ab4",
+      "authTag": "5d6e65e85990de8b488e1bdaa0014864"
+    },
+    {
+      "recipientDID": "did:ethr:aud1",
+      "ephemeralPubKey": "045e0ca35bddc47d2f4452faeb6b4a65e77e58da34a7e1452b6943e202843e995953733275f7704a3c15d55b23c048670796b6954be6bdb34da4b92e9df9c4a139",
+      "encryptedKey": "3db3608f802a3cb43c47aeec61cb00b09c384b6e23c84aa82fc0d2e3595d0577",
+      "iv": "2c7325eaeb2e6bb3c80afe41",
+      "authTag": "274b025b391ee79ddc64b677893d44ae"
+    },
+    {
+      "recipientDID": "did:ethr:aud2",
+      "ephemeralPubKey": "04927738ec830fee531a04569b5a22862d7737a2dc25acf6986b1840a30d520604c492d1ac57d4c71c5a143c2a30a420dee102a6c3fd35824e14cd6054cbb4be5f",
+      "encryptedKey": "0ca31cc334847560d617cc3aae5f95927cc8aea9ac597ec19e5e3995483d8067",
+      "iv": "d471d318a66bc0234c3f138e",
+      "authTag": "29a2825877de97fbb61806ae21b601f5"
+    },
+    {
+      "recipientDID": "did:ethr:aa1",
+      "ephemeralPubKey": "0428f098984b3c324ea218327b26a480007749142d6947af6e613153e1c74c6d518a8e39898bc89255a7c30027df88b2ae35dc11b38b483db8708755ae8217c46c",
+      "encryptedKey": "b7ad82ea15c4f0bdd92ba934b42e18f10bb1d5f118e2256de5b3323fe6598e4d",
+      "iv": "0c7a10cd00c5c29c394cc1d1",
+      "authTag": "da44af04ce9e0028a523446f218f0113"
+    }
+  ],
+  "updatedAt": 1780326137937
+}

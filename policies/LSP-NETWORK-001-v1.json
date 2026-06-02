@@ -1,0 +1,32 @@
+{
+  "id": "LSP-NETWORK-001",
+  "version": "1.0",
+  "domain": "NETWORK",
+  "standard": "NIS2-compliant",
+  "issued": "2026-01-15T09:00:00Z",
+  "description": "Logging Security Policy per il dominio NETWORK — versione iniziale. Copre autenticazione e accessi privilegiati.",
+  "rules": [
+    {
+      "eventType": "authentication_failure",
+      "sources": ["firewall", "vpn_gateway"],
+      "retention": "P90D",
+      "severity": "HIGH",
+      "alertThreshold": 5,
+      "format": "CEF"
+    },
+    {
+      "eventType": "privileged_access",
+      "sources": ["active_directory"],
+      "retention": "P365D",
+      "severity": "CRITICAL",
+      "alertThreshold": 1,
+      "format": "CEF"
+    }
+  ],
+  "enforcement": {
+    "mandatory": true,
+    "gracePeriod": "P7D",
+    "auditFrequency": "monthly",
+    "safeDefault": "LSP-NETWORK-SAFE-DEFAULT-001"
+  }
+}

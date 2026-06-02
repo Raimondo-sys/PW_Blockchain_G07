@@ -1,0 +1,40 @@
+{
+  "id": "LSP-NETWORK-001",
+  "version": "2.0",
+  "domain": "NETWORK",
+  "standard": "NIS2-compliant",
+  "issued": "2026-03-01T09:00:00Z",
+  "description": "Aggiornamento policy NETWORK: retention estesa, nuove sorgenti, aggiunta regola dns_anomaly.",
+  "rules": [
+    {
+      "eventType": "authentication_failure",
+      "sources": ["firewall", "vpn_gateway", "radius"],
+      "retention": "P180D",
+      "severity": "HIGH",
+      "alertThreshold": 3,
+      "format": "CEF"
+    },
+    {
+      "eventType": "privileged_access",
+      "sources": ["active_directory", "pam"],
+      "retention": "P365D",
+      "severity": "CRITICAL",
+      "alertThreshold": 1,
+      "format": "CEF"
+    },
+    {
+      "eventType": "dns_anomaly",
+      "sources": ["dns_server"],
+      "retention": "P90D",
+      "severity": "HIGH",
+      "alertThreshold": 1,
+      "format": "CEF"
+    }
+  ],
+  "enforcement": {
+    "mandatory": true,
+    "gracePeriod": "P3D",
+    "auditFrequency": "weekly",
+    "safeDefault": "LSP-NETWORK-SAFE-DEFAULT-001"
+  }
+}
