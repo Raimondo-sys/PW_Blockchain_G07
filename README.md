@@ -1,106 +1,163 @@
-# WP4 — Sistema di Governance Decentralizzata per Logging Security Policy
+# 🔐 Decentralized Governance for Logging Security Policy
 
-Università di Salerno — Corso Blockchain e Cybersecurity 2025/2026  
-Progetto: Governance decentralizzata delle Logging Security Policy su blockchain consortium EVM + IPFS
+<div align="center">
+
+![Solidity](https://img.shields.io/badge/Solidity-0.8.28-363636?style=for-the-badge&logo=solidity)
+![Hardhat](https://img.shields.io/badge/Hardhat-3.7.0-f7dc6f?style=for-the-badge&logo=hardhat)
+![TypeScript](https://img.shields.io/badge/TypeScript-6.x-3178c6?style=for-the-badge&logo=typescript)
+![Tests](https://img.shields.io/badge/Tests-52%2F52%20passing-2ecc71?style=for-the-badge)
+![License](https://img.shields.io/badge/License-MIT-blue?style=for-the-badge)
+
+**Sistema di governance decentralizzata per la gestione delle Logging Security Policy su blockchain EVM PoA**
+
+*Università di Salerno — Blockchain & Cybersecurity 2025/2026*
+
+</div>
 
 ---
 
-## Architettura
+## 📋 Panoramica
 
-Quattro smart contract su blockchain EVM (PoA consortium) + IPFS per lo storage off-chain:
+Il sistema implementa un meccanismo di governance decentralizzata per la gestione del ciclo di vita delle **Logging Security Policy** in un consorzio enterprise. Nessun attore singolo ha autorità unilaterale — ogni decisione richiede una delibera a **quorum 3/4** delle Policy Authority attive.
 
 ```
-IdentityRegistry (IR)
-  └─ gestisce DID lifecycle, ruoli, deleghe, chiavi RSA pubbliche on-chain
-
-CredentialValidationContract (CVC)
-  └─ registra on-chain le validazioni VP eseguite off-chain (JWT RS256)
-
-GovernanceContract (GC)
-  └─ ciclo vita proposte policy + governance consorzio (quorum 3/4 PA)
-
-PolicyRegistry (PR)
-  └─ registro permanente delle policy: Active → Archived → Retired
+DEG sottomette proposta  →  PP verifica e inoltra  →  PA endorse  →  PA votano (3/4)  →  Policy certificata
+                                                                                              ↓
+                                                                              AA scarica, verifica CID, applica
 ```
 
-**Flusso principale** (WP2 §2.2):
-1. DEG costruisce VP JWT RS256, la verifica off-chain, registra `validationId` nel CVC
-2. DEG chiama `submitProposal(cid, cidKeyDistrib, domain, replacesId, safeDefaultCid, validationId)`
-3. PP verifica, ottiene `validationId`, chiama `forwardProposal`
-4. PA endorse e votano (autenticazione diretta via `msg.sender`)
-5. Al raggiungimento del quorum (3/4) la policy viene certificata atomicamente nel PR
-6. AA scarica da IPFS, verifica integrità CID, applica configurazione, chiama `confirmEnforcement`
+---
+
+## 🏗️ Architettura
+
+```
+┌─────────────────────────────────────────────────────────────────┐
+│                         EVM PoA Consortium                       │
+│                                                                   │
+│  ┌──────────────────┐         ┌────────────────────────────┐    │
+│  │ IdentityRegistry │◄────────│    GovernanceContract      │    │
+│  │                  │         │                            │    │
+│  │  DID lifecycle   │         │  Proposte + Votazione      │    │
+│  │  Ruoli e deleghe │         │  Governance consorzio      │    │
+│  │  Chiavi RSA      │         │  Quorum 3/4                │    │
+│  └──────────────────┘         └────────────────────────────┘    │
+│                                          │                        │
+│  ┌───────────────────────────┐           │                        │
+│  │ CredentialValidationContr.│◄──────────┤                        │
+│  │                           │           │                        │
+│  │  validationId on-chain    │           │                        │
+│  │  Anti-replay TTL 5 min    │           ▼                        │
+│  │  Adattatore crittografico │  ┌─────────────────┐             │
+│  └───────────────────────────┘  │  PolicyRegistry  │             │
+│                                  │                  │             │
+│                                  │  Active          │             │
+│                                  │  → Archived      │             │
+│                                  │  → Retired       │             │
+│                                  └─────────────────┘             │
+└─────────────────────────────────────────────────────────────────┘
+```
 
 ---
 
-## Stack tecnologico
+## ⚙️ Stack Tecnologico
 
-- **Hardhat 3.7.0** con `hardhat-toolbox-viem` (ESM obbligatorio)
-- **TypeScript 6.0.3** + **Viem 2.x**
-- **JWT RS256** (`jsonwebtoken`) per VC e VP
-- **AES-256-GCM + ECDH P-256** (`crypto` nativo Node) per cifratura ibrida
-- **Helia** per IPFS reale (solo `ipfs-demo.ts`), IPFS simulato per gli script Hardhat
+| Layer | Tecnologia | Versione |
+|---|---|---|
+| Framework blockchain | Hardhat | 3.7.0 |
+| Client EVM | Viem | 2.x |
+| Linguaggio | TypeScript | 6.x |
+| Identità (VC/VP) | JWT RS256 — jsonwebtoken | 9.x |
+| Cifratura payload | AES-256-GCM + ECDH P-256 | Node crypto |
+| Storage | IPFS simulato SHA-256 + Helia PoC | — |
+| Analisi statica | Slither | 0.11.5 |
 
 ---
 
-## Installazione
+## 🚀 Installazione
 
 ```bash
+# Clona la repository
+git clone https://github.com/TUO_USERNAME/NOME_REPO.git
+cd NOME_REPO
+
+# Installa le dipendenze
 npm install
+
+# Compila i contratti
 npx hardhat compile
 ```
 
 ---
 
-## Esecuzione
-
-### Deploy su rete locale
-
-```bash
-# Terminale 1
-npx hardhat node
-
-# Terminale 2
-npx hardhat run scripts/deploy.ts --network localhost
-```
-
-### Deploy su hardhatMainnet (autonomo, no nodo esterno)
-
-```bash
-npx hardhat run scripts/deploy-mainnet.ts --network hardhatMainnet
-```
-
-### Script dimostrativi
-
-```bash
-# Flusso end-to-end completo (v1 → v2 → RetirePolicy)
-npx hardhat run scripts/full_flow.ts --network hardhatMainnet
-
-# Dimostrazione VC/VP JWT RS256 e integrazione CVC
-npx hardhat run scripts/credential_flow.ts --network hardhatMainnet
-
-# Auditor: verificabilità indipendente
-npx hardhat run scripts/auditor.ts --network hardhatMainnet
-
-# External Verifier: accesso temporaneo pairwise DID
-npx hardhat run scripts/external_verifier.ts --network hardhatMainnet
-
-# Benchmark: latency, gas, storage overhead
-npx hardhat run scripts/benchmark.ts --network hardhatMainnet
-
-# IPFS reale con Helia (node diretto, non Hardhat)
-node --loader ts-node/esm scripts/ipfs-demo.ts
-```
-
-### Test
+## 🧪 Test
 
 ```bash
 npx hardhat test
 ```
 
+```
+  CredentialValidationContract   8 passing
+  GovernanceContract            11 passing
+  IdentityRegistry              16 passing
+  Integration                    5 passing
+  PolicyRegistry                12 passing
+  ─────────────────────────────────────────
+  52 passing — 0 failing
+```
+
 ---
 
-## Struttura del progetto
+## ▶️ Esecuzione
+
+```bash
+# Deploy su rete simulata autonoma
+npx hardhat run scripts/deploy-mainnet.ts --network hardhatMainnet
+
+# Flusso end-to-end completo (v1 → v2 → RetirePolicy)
+npx hardhat run scripts/full_flow.ts --network hardhatMainnet
+
+# Dimostrazione VC/VP JWT RS256 + selective disclosure
+npx hardhat run scripts/credential_flow.ts --network hardhatMainnet
+
+# Auditor — verifica indipendente con finestra di audit
+npx hardhat run scripts/auditor.ts --network hardhatMainnet
+
+# External Verifier — accesso temporaneo con pairwise DID
+npx hardhat run scripts/external_verifier.ts --network hardhatMainnet
+
+# Benchmark — gas, latency, storage overhead
+npx hardhat run scripts/benchmark.ts --network hardhatMainnet
+```
+
+---
+
+## 🔒 Proprietà di Sicurezza
+
+| Proprietà | Meccanismo | THA coperta |
+|---|---|---|
+| Anti-double voting | `_proposalVotes` mapping per DID | THA-4 |
+| Policy injection | `onlyGovernance` nel PolicyRegistry | THA-1 |
+| Revoca lazy cascade | Flag `active = false`, costo O(1) | THA-5 |
+| Anti-replay | `validationId` monouso con TTL 5 min | THA-6, THA-7 |
+| Storia immutabile | Append-only nel PolicyRegistry | THA-11 |
+| Quorum snapshot | Acquisito all'endorsement, immutabile | THA-3 |
+| Deadlock PA | `replacePAByGovernance` atomico | THA-2 |
+
+---
+
+## 📊 Risultati
+
+```
+✅  52 / 52  test automatici passing
+🔍   0 / 58  finding di severità High (Slither 0.11.5)
+⛽  2.617.904 gas — ciclo vita completo policy
+⚡    < 20 ms — flusso off-chain (VC + VP + validationId)
+📦  423 SLOC  — contratto più grande (GovernanceContract)
+```
+
+---
+
+## 📁 Struttura del Progetto
 
 ```
 contracts/
@@ -110,29 +167,22 @@ contracts/
   PolicyRegistry.sol                 Registro permanente policy
 
 crypto/
-  keys.ts       Generazione RSA 2048 + ECDH P-256
-  vc.ts         Emissione e verifica VC come JWT RS256
-  vp.ts         Costruzione VP JWT RS256 con selective disclosure
-  hybrid.ts     Cifratura ibrida AES-256-GCM + ECDH P-256
+  keys.ts      Generazione RSA 2048 + ECDH P-256
+  vc.ts        Emissione e verifica VC — JWT RS256
+  vp.ts        Costruzione VP con selective disclosure
+  hybrid.ts    Cifratura ibrida AES-256-GCM + ECDH P-256
 
 ipfs/
-  helia-node.ts      IPFS reale Helia in-memory (ipfs-demo.ts)
-  ipfs-simulated.ts  IPFS simulato SHA-256 (script Hardhat)
-
-policies/
-  safe-default-network.json    Configurazione minima dominio NETWORK
-  LSP-NETWORK-001-v1.json      Policy NETWORK versione 1.0
-  LSP-NETWORK-001-v2.json      Policy NETWORK versione 2.0
+  ipfs-simulated.ts   IPFS simulato SHA-256 (script e test)
+  helia-node.ts       IPFS reale Helia in-memory (PoC)
 
 scripts/
-  deploy.ts              Bootstrap localhost
-  deploy-mainnet.ts      Bootstrap hardhatMainnet
+  deploy-mainnet.ts      Bootstrap autonomo su hardhatMainnet
   full_flow.ts           Flusso end-to-end completo
   credential_flow.ts     Dimostrazione VC/VP + CVC
-  auditor.ts             Verificabilità indipendente
+  auditor.ts             Verifica indipendente Auditor
   external_verifier.ts   Accesso temporaneo EV
   benchmark.ts           Performance evaluation
-  ipfs-demo.ts           IPFS reale Helia
 
 test/
   IdentityRegistry.test.ts
@@ -140,18 +190,22 @@ test/
   GovernanceContract.test.ts
   PolicyRegistry.test.ts
   integration.test.ts
+
+policies/
+  safe-default-network.json
+  LSP-NETWORK-001-v1.json
+  LSP-NETWORK-001-v2.json
 ```
 
 ---
 
-## Semplificazioni del prototipo (documentate nel WP4)
+## 👥 Autori
 
-| Componente | Produzione | Prototipo |
-|---|---|---|
-| IPFS | Cluster reale con full-coverage replication tra 4 PA | Helia in-memory (demo) + SHA-256 simulato (script) |
-| Verifica VP | On-chain nell'EVM | Off-chain + registrazione `validationId` on-chain nel CVC |
-| Selective disclosure | SD-JWT completo | Hash claim con salt, disclosure parziale nella VP |
-| Wallet | Persistente su disco con chiave RSA + ECDH | In-memory per sessione |
-| Chiave P-256 | Registrata on-chain nell'IR | Solo off-chain (IR contiene solo chiave RSA) |
+Progetto di gruppo — Università di Salerno
+Corso: Blockchain e Cybersecurity — A.A. 2025/2026
 
-**Giustificazione architetturale CVC**: RSA 2048 non è verificabile on-chain nell'EVM senza precompilazioni custom non disponibili in PoA consortium. Il pattern off-chain + `validationId = keccak256-like(vpJwt)` registrato on-chain mantiene la tracciabilità senza sacrificare la fattibilità.
+---
+
+<div align="center">
+  <sub>Built with ❤️ on Hardhat · Solidity · TypeScript</sub>
+</div>
