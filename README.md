@@ -47,12 +47,12 @@ DEG sottomette proposta  →  PP verifica e inoltra  →  PA endorse  →  PA vo
 │  │                           │           │                      │
 │  │  validationId on-chain    │           │                      │
 │  │  Anti-replay TTL 5 min    │           ▼                      │
-│  │  Adattatore crittografico │  ┌─────────────────┐             │
-│  └───────────────────────────┘  │  PolicyRegistry  │            │
-│                                  │                  │           │
-│                                  │  Active          │           │
-│                                  │  → Archived      │           │
-│                                  │  → Retired       │           │
+│  │  Adattatore crittografico │   ┌─────────────────┐            │
+│  └───────────────────────────┘   │  PolicyRegistry │            │
+│                                  │                 │            │
+│                                  │  Active         │            │
+│                                  │  → Archived     │            │
+│                                  │  → Retired      │            │
 │                                  └─────────────────┘            │
 └─────────────────────────────────────────────────────────────────┘
 ```
